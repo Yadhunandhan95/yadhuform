@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators,FormControl, FormArray } from '@angular/forms';
 import { __values } from 'tslib';
@@ -36,6 +35,13 @@ export class AppComponent implements OnInit {
     // "Kumar",
     // "Gowtham"
     ];
+    sec_num = [
+      "9127465827",
+      "9018374635",
+      "9810217475",
+      "9750328132"
+
+    ]
     // item_number = [
     // "9098786865",
     // "9098786908",
@@ -68,22 +74,45 @@ export class AppComponent implements OnInit {
   emails1:any
   secnum:any
   i = -1;
+  x = 0;
  box = document.getElementById('box');
   info_input: any;
   editValue: boolean = false;
   infoCollection: Info[] = [];
-
+seconum:any
   list_input:Info = {
     content:""
   };
   inputId: any='';
   str: any;
   yad1: any;
+  yad:any;
 item: any;
   e : any;
+  private secondary : FormArray;
+  CreateEAuctionForm: any;
+
+  secondaryName: any;
+  
+  constructor(private fb: FormBuilder) {
+
+
+    this.yadhuForm = this.fb.group({
+      name: ['', Validators.required],
+      number: ['', Validators.required],
+      secondaryNumber: ['', Validators.required],
+      email: ['', Validators.required],
+    })
+//     this.secondary = this.fb.array([
+// [''],
+// [''],
+// ['']
+//     ])
+  }
+
   ngOnInit(): void {
 
-
+const formarr = <FormArray>this.yadhuForm.get('secondaryName')
     this.yadhuForm = new FormGroup({
     
       name: new FormControl('', [
@@ -99,13 +128,27 @@ item: any;
         Validators.required,
         Validators.email,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z]+.[a-z]{2,3}$')]),
-       number1: new FormGroup({
-        secondaryNumber: new FormArray([]),
-        secondary: new FormControl([])
-       })
+       
+   secondaryNumber: new FormArray([
+    new FormControl()
+   ])
+    
     })
-  
+  console.log(this.yadhuForm)
+  // this.secondary = <FormArray>this.yadhuForm.controls['secondaryNumber'];
+//   const res = [{ mtype: 'mtypeModified',land: 'landModified'}]
+//          if(formarr.at(0)){
+//           formarr.at(0).patchValue({
+// mediaTyp: res[0].mtype,
+// land: res[0].land
+//           })
+//          }
+//          else{
+//           formarr.push()
+//          }
+//this.secondaryNumber.patchValue(["9078456321"]);
   }
+
   get name() 
   {
     return this.yadhuForm.get('name');
@@ -121,24 +164,11 @@ item: any;
 
   get secondaryNumber()
   {
-    return this.yadhuForm.get('secondaryNumber') as FormArray;
+    return (<FormArray>this.yadhuForm.get('secondaryNumber')).controls;
   }
-get secondary()
-{
-  return this.yadhuForm.get('secondary')
-}
-  
-  constructor(private fb: FormBuilder) {
 
   
-
-    this.yadhuForm = this.fb.group({
-      name: ['', Validators.required],
-      number: ['', Validators.required],
-      secondaryNumber: ['', Validators.required],
-      email: ['', Validators.required],
-    })
-  }
+  
   
  nextName() {
       this.i = this.i >= this.item_names.length - 1 ? 0 : this.i + 1;
@@ -152,16 +182,24 @@ get secondary()
       this.secondaryNumber.push(this.fb.control(''));
       }
       deleteSecondaryNumber(index: number) {
-        this.secondaryNumber.removeAt(index);
+        this.secondaryNumber.splice(index);
       }
-
+  
+    
     AddItem(){
       // alert(this.yadhuForm.value.name)
-     
-      this.listData.push({"name":this.names1,"number":this.numbers1,"secondaryNumber":this.secnum,"email":this.emails1})
+     console.log(this.yadhuForm)
+      this.listData.push({"name":this.yadhuForm.value.name,"number":this.yadhuForm.value.number,"secondaryNumber":this.yadhuForm.value.secondaryNumber,"email":this.yadhuForm.value.email})
 
     }
-    
+    // secondaryFormArray(groupName: string, i: number) {
+    //   return (this.yadhuForm.get(groupName) as FormArray).controls[i].get(
+    //     "secondaryNumber"
+    //   ) as FormArray;
+    // }
+    // secondaryNum(groupName: string, i: number): Array<FormControl> {
+    //   return this.secondaryFormArray(groupName, i).controls as Array<FormControl>;
+    // }
     Reset(){
       this.yadhuForm.reset();
     }
@@ -171,9 +209,9 @@ get secondary()
     //   var list_index = this.listData.length;
     //   this.listData.splice(list_index,1);
     // }
-    deleteItem(item:any) {
-      console.log('going to delete-',item)
-      var index = _.findIndex(this.listData,item)
+    deleteItem(x: any) {
+      console.log('going to delete-',x)
+      var index = _.findIndex(this.listData,x)
     //   let index = this.listData.findIndex(e => e.item === item);
     //  if(index !== -1){
     //   this.listData.splice(index,1);
@@ -181,7 +219,7 @@ get secondary()
      
     //  console.log(index); 
       console.log('list_index -del',index)
-      this.listData.splice(index,1);
+      this.listData.splice(this.x,1);
       
     }
     editItem(item: any) {
@@ -212,5 +250,3 @@ get secondary()
       }
     }
     }
-  
-  
