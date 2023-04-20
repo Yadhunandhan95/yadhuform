@@ -61,3 +61,52 @@ button
 {
 margin-left: 5px;
 }
+table{
+  width:1000px;
+  margin-top: 50px;
+  text-align: center;
+  background: #333;
+  color: #fff;
+}
+#data th, #data td{
+  padding: 10px;
+
+}
+
+#addfield{
+  width: 90px;
+  height: auto;
+  padding: 5px;
+  align-items: center;
+  justify-items: center;
+}
+#updatefield{
+  width: 90px;
+  height: auto;
+  padding: 5px;
+  align-items: center;
+  justify-items: center;
+}
+.form-control{
+  height:auto;
+  width:100%;
+  padding: 5px;
+  margin: 10px;
+}
+.upp{
+  width: 90px;
+  height: 40px;
+  padding: 5px;
+  align-items: center;
+  justify-items: center;
+}
+.vall{
+  margin: 10px;
+  justify-items: center;
+  padding: 10px;
+  align-items: center;
+  text-align: left;
+  text-rendering:50% ;
+  font-size: medium;
+  
+}
